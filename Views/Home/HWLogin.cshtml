@@ -1,0 +1,50 @@
+﻿
+@{
+    ViewData["Title"] = "HWLogin";
+}
+
+<h1>HWLogin</h1>
+<div class="row">
+    <div class="col-3"></div>
+    <div class="col-6">
+        <h1>AjaxPost</h1>
+        <form name="userInfo" method="post" enctype="application/x-www-form-urlencoded">
+            <div class="form-group">
+                <label for="InputName">姓名</label>
+                <input type="text" class="form-control" id="InputName" name="name">
+                <small id="nameHelp" class="form-text text-muted">請輸入姓名</small>
+            </div>
+            <div class="form-group">
+                <label for="InputEmail">電子郵件</label>
+                <input type="text" class="form-control" id="InputEmail" name="email">
+            </div>
+            <div class="form-group">
+                <label for="InputEmail">年紀</label>
+                <input type="number" class="form-control" id="InputAge" name="age">
+            </div>
+            <button type="submit" class="btn btn-primary" id="btnPost">Submit</button>
+        </form>
+        <div class="alert alert-info" id="div1"></div>
+    </div>
+    <div class="col-3"></div>
+</div>
+@section Scripts{
+    <script>
+        const btn = document.querySelector('#btnPost');
+        const divInfo = document.querySelector('#div1');
+        const txtName = document.querySelector('#InputName');
+        const txtSmall =document.querySelector('#nameHelp')
+
+        txtName.addEventListener('change', () => {
+            const xhr = new XMLHttpRequest();
+            const formData = new FormData(document.userInfo);
+            xhr.addEventListener('load', () => {
+                const data = xhr.responseText;
+                txtSmall.textContent = data;
+            })
+            xhr.open('POST', '@Url.Content("~/Api/CheckName")');
+            xhr.send(formData);
+        })
+    </script>
+
+}
